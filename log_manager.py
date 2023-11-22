@@ -1,3 +1,5 @@
+# log_manager.py
+
 import logging
 
 class LogManager:
@@ -13,8 +15,10 @@ class LogManager:
         logging.info("-" * 80)  # Separator line
 
         for log in logs:
-            logging.info(f"Timestamp: {log['timestamp']}")
-            logging.info(f"Device: {log['device']}")
-            logging.info(f"Process: {log['process']}")
-            logging.info(f"Message: {log['message']}")
+            # Replace f-strings with format method
+            logging.info("Timestamp: {}".format(log['timestamp']))
+            logging.info("Device: {}".format(log['device']))
+            logging.info("Process: {}".format(log['process']))
+            logging.info("Message: {}".format(log['message']))
+            logging.info(f"Severity: {log.get('severity', 'N/A')}")  
             logging.info("-" * 80)  # Separator line

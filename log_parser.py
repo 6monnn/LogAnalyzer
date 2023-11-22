@@ -22,6 +22,5 @@ class LogParser:
     @staticmethod
     def extract_severity(message):
         # Implement logic to extract severity from the log message
-        # For example, let's assume the severity is in square brackets, like "[CRITICAL]"
-        match = re.search(r'\[([A-Z]+)\]', message)
-        return match.group(1) if match else None
+        match = re.search(r'\[([A-Za-z]+)\]', message)
+        return match.group(1).upper() if match else None
