@@ -1,11 +1,12 @@
 # main.py
 
 import argparse
-from log_parser import LogParser
-from log_analyzer import LogAnalyzer
-from log_manager import LogManager
-from log_reader import LogReader
-from log_filter import LogFilter
+
+from app.log_parser import *
+from app.log_manager import *
+from app.log_analyzer import *
+from app.log_reader import *
+from app.log_filter import *
 
 if __name__ == "__main__":
     log_line_pattern = r'(\w+ +\d+ \d+:\d+:\d+) (\S+) (\S+): (.+)'
