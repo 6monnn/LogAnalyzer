@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-from ..app import *
 
 import os
 
@@ -24,8 +23,8 @@ class WelcomePage(tk.Frame):
         self.file_path.set(filedialog.askopenfilename())
 
     def start_analysis(self):
-        # Add your log analysis logic here
-        print("Log analysis started for file:", self.file_path.get())
+        log_file_path = self.file_path.get()
+        self.master.show_analyze_page(log_file_path)
 
     def create_widgets(self):
         # Set column and row weights to make the grid responsive

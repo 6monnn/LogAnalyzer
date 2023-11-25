@@ -1,38 +1,31 @@
-# main.py
+import tkinter as tk
+from tkinter import ttk
+from interfaces.welcome_page import WelcomePage
+from interfaces.analyze_page import AnalyzePage  # Adjust the import based on your actual file structure
 
-import argparse
+class LogAnalyzerApp(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Log Analyzer App")
+        self.geometry("600x400")
 
-from app.log_parser import *
-from app.log_manager import *
-from app.log_analyzer import *
-from app.log_reader import *
-from app.log_filter import *
+        self.welcome_page = WelcomePage(self)
+        self.analyze_page = AnalyzePage(self)
+
+        self.show_page("WelcomePage")
+
+    def show_page(self, page_name):
+        if page_name == "WelcomePage":
+            self.welcome_page.pack()
+            self.analyze_page.pack_forget()
+        elif page_name == "AnalyzePage":
+            self.welcome_page.pack_forget()
+            self.analyze_page.pack()
+
+    def show_analyze_page(self, log_file_path):
+        self.analyze_page.set_log_file(log_file_path)
+        self.show_page("AnalyzePage")
 
 if __name__ == "__main__":
-    log_line_pattern = r'(\w+ +\d+ \d+:\d+:\d+) (\S+) (\S+): (.+)'
-
-    # Parse command line arguments
-    parser = argparse.ArgumentParser(description='Parse and filter logs.')
-    parser.add_argument('--log_file', default='/var/log/syslog', help='Path to the log file')
-    parser.add_argument('--severity', nargs='+', default=[], help='Specify severity levels to display')
-    parser.add_argument('--process', default='', help='Specify process name to filter logs')
-    args = parser.parse_args()
-
-    log_file_path = args.log_file
-    severity_levels = args.severity
-    process_name = args.process
-
-    log_parser = LogParser(log_line_pattern)
-    log_analyzer = LogAnalyzer()
-    log_manager = LogManager()
-    log_reader = LogReader()
-    log_filter = LogFilter()
-
-    parsed_logs = log_reader.read_log_file(log_file_path, log_parser)
-
-    # Apply log filtering rules based on specified severity levels and process name
-    if severity_levels or process_name:
-        filtered_logs = log_filter.filter_logs(parsed_logs, severity_levels, process_name)
-        log_manager.display_logs(filtered_logs)
-    else:
-        log_manager.display_logs(parsed_logs)
+    app = LogAnalyzerApp()
+    app.mainloop()
