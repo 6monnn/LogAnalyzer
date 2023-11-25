@@ -10,23 +10,26 @@ class WelcomePage(tk.Frame):
         self.master = master
         self.style = ttk.Style()
 
-        self.style.configure("TLabel", foreground="black", font=('Helvetica', 18, 'bold'))
+        # Configuration du style pour les labels et les boutons
         self.style.configure("TLabel", foreground="black", font=('Helvetica', 18, 'bold'))
         self.style.configure("TButton", foreground="black", font=('Helvetica', 14, 'bold'))
 
         self.create_widgets()
 
     def set_default_path(self):
+        # Définir le chemin par défaut du fichier
         desktop_path = "/var/log/syslog"
         self.file_path.set(desktop_path)
 
     def browse_file(self):
+        # Ouvrir une boîte de dialogue pour sélectionner un fichier
         default_file = "/var/log/syslog"
         file_path = filedialog.askopenfilename(initialdir=default_file, title="Select Log File")
         if file_path:
             self.file_path.set(file_path)
 
     def start_analysis(self):
+        # Obtenir les valeurs des champs
         log_file_path = self.file_path.get()
         severity_filter = self.severity_filter.get()
         process_filter = self.process_filter.get()
@@ -36,9 +39,11 @@ class WelcomePage(tk.Frame):
             messagebox.showerror("Error", f"Fichier introuvable: {log_file_path}")
             return
 
+        # Appeler la fonction show_analyze_page du maître avec les paramètres nécessaires
         self.master.show_analyze_page(log_file_path, process_filter, severity_filter)
+
     def create_widgets(self):
-        # Set column and row weights to make the grid responsive
+        # Configurer les poids des colonnes et des lignes pour rendre la grille réactive
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.rowconfigure(0, weight=1)
@@ -46,18 +51,19 @@ class WelcomePage(tk.Frame):
         self.rowconfigure(2, weight=1)
         self.rowconfigure(3, weight=1)
 
+        # Cadre pour le titre
         title_frame = ttk.Frame(self, style="TFrame")
         title_frame.pack(fill="both", expand=True)
 
+        # Label du titre
         self.title_label = ttk.Label(title_frame, text="Bienvenue dans notre analyseur de logs")
         self.title_label.pack(pady=10)
 
+        # Cadre pour les champs d'entrée
         entry_frame = ttk.Frame(self, style="TFrame")
         entry_frame.pack(fill="both", expand=True)
 
-
-
-        # Champs de texte pour saisir la sévérité et le processus
+        # Labels et champs de texte pour la sévérité et le processus
         severity_label = ttk.Label(entry_frame, text="Severity:")
         severity_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
@@ -71,7 +77,8 @@ class WelcomePage(tk.Frame):
         self.process_filter = tk.StringVar()
         process_entry = ttk.Entry(entry_frame, textvariable=self.process_filter, width=20)
         process_entry.grid(row=1, column=1, padx=10, pady=10, sticky="w")
-        # Champs de sélection de fichiers
+
+        # Label et champ de texte pour le chemin du fichier
         file_label = ttk.Label(entry_frame, text="Log File:")
         file_label.grid(row=2, column=0, padx=10, pady=10, sticky="e")
 
@@ -81,8 +88,10 @@ class WelcomePage(tk.Frame):
         self.file_entry = ttk.Entry(entry_frame, textvariable=self.file_path, width=40)
         self.file_entry.grid(row=2, column=1, padx=10, pady=10, sticky="w")
 
+        # Bouton pour parcourir les fichiers
         self.browse_button = ttk.Button(entry_frame, text="Browse", command=self.browse_file)
         self.browse_button.grid(row=2, column=2, padx=10, pady=10, sticky="w")
 
+        # Bouton pour démarrer l'analyse
         self.start_button = ttk.Button(self, text="Start Analysis", command=self.start_analysis)
         self.start_button.pack(fill="both", pady=20)
