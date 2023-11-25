@@ -18,12 +18,12 @@ class AnalyzePage(ttk.Frame):
         self.log_file_path = None
         self.create_widgets()
 
-    def set_log_file(self, log_file_path):
+    def set_log_file(self, log_file_path,severity,pid):
         self.log_file_path = log_file_path
-        self.analyze_logs()
+        self.analyze_logs(severity,pid)
 
 
-    def analyze_logs(self):
+    def analyze_logs(self,severity,process):
         log_line_pattern = r'(\w+ +\d+ \d+:\d+:\d+) (\S+) (\S+): (.+)'
         parser = argparse.ArgumentParser(description='Parse and filter logs.')
 
@@ -54,8 +54,8 @@ class AnalyzePage(ttk.Frame):
         parsed_logs = log_reader.read_log_file(log_file_path, log_parser)
         log_text = ""
 
-        if severity_levels or process_name:
-            filtered_logs = log_filter.filter_logs(parsed_logs, severity_levels, process_name)
+        if severity or process_name:
+            filtered_logs = log_filter.filter_logs(parsed_logs, severity, process)
             log_text = "\n".join(self.format_log_entry(log) for log in filtered_logs)
         else:
             log_text = "\n".join(self.format_log_entry(log) for log in parsed_logs)
@@ -70,7 +70,7 @@ class AnalyzePage(ttk.Frame):
                f"{'-' * 30}"
 
     def create_widgets(self):
-        label = ttk.Label(self, text="Log Analysis Page")
+        label = ttk.Label(self, text="Vos logs")
         label.pack(pady=10)
 
         # Frame to contain both the text widget and the scrollbar
