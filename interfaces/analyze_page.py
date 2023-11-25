@@ -1,11 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
 import argparse
+from tkinter import messagebox
 import app.log_filter as lf
 import app.log_parser as lp
 import app.log_reader as lr
 import app.log_manager as lm
 import app.log_analyzer as la
+from app.log_reader import LogReaderError
 
 class AnalyzePage(ttk.Frame):
     def __init__(self, master):
@@ -19,6 +21,7 @@ class AnalyzePage(ttk.Frame):
     def set_log_file(self, log_file_path):
         self.log_file_path = log_file_path
         self.analyze_logs()
+
 
     def analyze_logs(self):
         log_line_pattern = r'(\w+ +\d+ \d+:\d+:\d+) (\S+) (\S+): (.+)'
@@ -44,6 +47,10 @@ class AnalyzePage(ttk.Frame):
         log_reader = lr.LogReader()
         log_filter = lf.LogFilter()
 
+        # Initialize parsed_logs with an empty list
+        parsed_logs = []
+
+
         parsed_logs = log_reader.read_log_file(log_file_path, log_parser)
         log_text = ""
 
@@ -52,8 +59,7 @@ class AnalyzePage(ttk.Frame):
             log_text = "\n".join(self.format_log_entry(log) for log in filtered_logs)
         else:
             log_text = "\n".join(self.format_log_entry(log) for log in parsed_logs)
-
-        self.log_display.insert(tk.END, log_text)
+            self.log_display.insert(tk.END, log_text)
 
     def format_log_entry(self, log):
         return f"Timestamp: {log['timestamp']}\n" \
@@ -71,10 +77,13 @@ class AnalyzePage(ttk.Frame):
         text_frame = ttk.Frame(self)
         text_frame.pack(padx=10, pady=10, expand=True, fill="both")
 
-        self.log_display = tk.Text(text_frame, wrap="word", height=20, width=80)
+        self.log_display = tk.Text(text_frame, wrap="word", height=50, width=90)
         self.log_display.pack(side="left", expand=True, fill="both")
 
         # Scrollbar
         scrollbar = ttk.Scrollbar(text_frame, orient="vertical", command=self.log_display.yview)
         scrollbar.pack(side="right", fill="y")
         self.log_display.config(yscrollcommand=scrollbar.set)
+
+
+

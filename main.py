@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 from interfaces.welcome_page import WelcomePage
 from interfaces.analyze_page import AnalyzePage  # Adjust the import based on your actual file structure
 
@@ -23,8 +24,18 @@ class LogAnalyzerApp(tk.Tk):
             self.analyze_page.pack()
 
     def show_analyze_page(self, log_file_path):
-        self.analyze_page.set_log_file(log_file_path)
-        self.show_page("AnalyzePage")
+        try:
+            self.analyze_page.set_log_file(log_file_path)
+            self.show_page("AnalyzePage")
+        except:
+            messagebox.showerror("Error", f"Erreur de lecture du fichier journal.")
+            self.show_page("WelcomePage")
+
+
+
+
+    def show_welcome_page(self):
+        self.show_page("WelcomePage")
 
 if __name__ == "__main__":
     app = LogAnalyzerApp()

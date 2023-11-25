@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 import os
-
+from tkinter import messagebox
 class WelcomePage(tk.Frame):
     def __init__(self, master=None, style=None):
         super().__init__(master, style=style)
@@ -14,7 +14,7 @@ class WelcomePage(tk.Frame):
         self.create_widgets()
 
     def set_default_path(self):
-        desktop_path = os.path.join(os.path.expanduser('~'), 'Desktop')
+        desktop_path = "/var/log/syslog"
         self.file_path.set(desktop_path)
 
     def browse_file(self):
@@ -25,7 +25,12 @@ class WelcomePage(tk.Frame):
 
     def start_analysis(self):
         log_file_path = self.file_path.get()
-        print(log_file_path)
+
+        # Add a check to ensure the file exists
+        if not os.path.exists(log_file_path):
+            messagebox.showerror("Error", f"Fichier introuvable: {log_file_path}")
+            return
+
         self.master.show_analyze_page(log_file_path)
 
     def create_widgets(self):
