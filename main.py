@@ -7,7 +7,7 @@ class LogAnalyzerApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Log Analyzer App")
-        self.geometry("600x400")
+        self.geometry("800x800")
 
         self.welcome_page = WelcomePage(self)
         self.analyze_page = AnalyzePage(self)
