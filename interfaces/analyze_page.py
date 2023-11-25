@@ -49,10 +49,8 @@ class AnalyzePage(ttk.Frame):
 
         if severity_levels or process_name:
             filtered_logs = log_filter.filter_logs(parsed_logs, severity_levels, process_name)
-
             log_text = "\n".join(self.format_log_entry(log) for log in filtered_logs)
         else:
-
             log_text = "\n".join(self.format_log_entry(log) for log in parsed_logs)
 
         self.log_display.insert(tk.END, log_text)
