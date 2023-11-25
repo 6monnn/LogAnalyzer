@@ -54,7 +54,11 @@ class AnalyzePage(ttk.Frame):
         parsed_logs = log_reader.read_log_file(log_file_path, log_parser)
         log_text = ""
 
-        if severity or process_name:
+
+        #TODO fixer ça
+       #Problème dans ce if :  severity et proces_name c'est les variables que je récupére depuis le form
+        #Voir comment rentrer dans le IF et comment fonctionne le tri
+        if severity!="" or process_name!="":
             filtered_logs = log_filter.filter_logs(parsed_logs, severity, process)
             log_text = "\n".join(self.format_log_entry(log) for log in filtered_logs)
         else:
