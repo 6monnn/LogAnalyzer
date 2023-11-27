@@ -18,3 +18,14 @@ def parse_macos_log_line(log_line):
         }
     else:
         return None
+
+def macos_failed_login(log_entry):
+    if 'authentication failed' in log_entry.get('message', '').lower():
+        return {
+            'timestamp': log_entry['timestamp'],
+            'user': log_entry.get('user', 'Unknown'),
+            'status': 'Failed',
+            'source': 'macOS',
+            'message': log_entry['message']
+        }
+    return None

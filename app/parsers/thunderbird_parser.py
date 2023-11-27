@@ -16,3 +16,14 @@ def parse_thunderbird_log_line(log_line):
         }
     else:
         return None
+
+def thunderbird_failed_login(log_entry):
+    if 'login failure' in log_entry.get('message', '').lower():
+        return {
+            'timestamp': log_entry['timestamp'],
+            'user': log_entry.get('user', 'Unknown'),
+            'status': 'Failed',
+            'source': 'Thunderbird',
+            'message': log_entry['message']
+        }
+    return None

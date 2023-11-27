@@ -17,3 +17,14 @@ def parse_openssh_log_line(log_line):
         }
     else:
         return None
+
+def openssh_failed_login(log_entry):
+    if 'Failed password for' in log_entry.get('message', ''):
+        return {
+            'timestamp': log_entry['timestamp'],
+            'user': log_entry.get('user', 'Unknown'),
+            'status': 'Failed',
+            'source': 'OpenSSH',
+            'message': log_entry['message']
+        }
+    return None

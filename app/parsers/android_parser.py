@@ -17,3 +17,14 @@ def parse_android_log_line(log_line):
         }
     else:
         return None
+
+def android_failed_login(log_entry):
+    if 'login failed' in log_entry.get('message', '').lower():
+        return {
+            'timestamp': log_entry['timestamp'],
+            'user': log_entry.get('user', 'Unknown'),
+            'status': 'Failed',
+            'source': 'Android',
+            'message': log_entry['message']
+        }
+    return None

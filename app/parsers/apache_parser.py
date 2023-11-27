@@ -21,3 +21,14 @@ def parse_apache_log_line(log_line):
         }
     else:
         return None
+    
+def apache_failed_login(log_entry):
+    if log_entry.get('status') in [401, 403]:
+        return {
+            'timestamp': log_entry['timestamp'],
+            'user': log_entry.get('user', 'Unknown'),
+            'status': 'Failed',
+            'source': 'Apache',
+            'message': f"Failed login for {log_entry.get('user', 'Unknown')} from {log_entry['ip']}"
+        }
+    return None
