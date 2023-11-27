@@ -20,6 +20,24 @@ def parse_macos_log_line(log_line):
         return None
 
 def macos_failed_login(log_entry):
+    """
+    Detects a failed login attempt in a macOS log entry.
+
+    Args:
+    log_entry (dict): A dictionary representing a log entry from macOS.
+
+    Returns:
+    dict: A dictionary containing details of the failed login attempt, or None if no failed login is detected.
+
+    Example:
+    >>> log_entry = {
+        'timestamp': '2023-04-01 12:34:56',
+        'message': 'User authentication failed',
+        'user': 'johndoe'
+    }
+    >>> macos_failed_login(log_entry)
+    {'timestamp': '2023-04-01 12:34:56', 'user': 'johndoe', 'status': 'Failed', 'source': 'macOS', 'message': 'User authentication failed'}
+    """
     if 'authentication failed' in log_entry.get('message', '').lower():
         return {
             'timestamp': log_entry['timestamp'],

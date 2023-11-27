@@ -18,6 +18,24 @@ def parse_thunderbird_log_line(log_line):
         return None
 
 def thunderbird_failed_login(log_entry):
+    """
+    Detects a failed login attempt in a Thunderbird log entry.
+
+    Args:
+    log_entry (dict): A dictionary representing a log entry from Thunderbird.
+
+    Returns:
+    dict: A dictionary containing details of the failed login attempt, or None if no failed login is detected.
+
+    Example:
+    >>> log_entry = {
+        'timestamp': '2023-04-01 12:34:56',
+        'message': 'Login failure: user johndoe',
+        'user': 'johndoe'
+    }
+    >>> thunderbird_failed_login(log_entry)
+    {'timestamp': '2023-04-01 12:34:56', 'user': 'johndoe', 'status': 'Failed', 'source': 'Thunderbird', 'message': 'Login failure: user johndoe'}
+    """
     if 'login failure' in log_entry.get('message', '').lower():
         return {
             'timestamp': log_entry['timestamp'],

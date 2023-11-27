@@ -23,6 +23,24 @@ def parse_apache_log_line(log_line):
         return None
     
 def apache_failed_login(log_entry):
+    """
+    Detects a failed login attempt in an Android log entry.
+
+    Args:
+    log_entry (dict): A dictionary representing a log entry from Android.
+
+    Returns:
+    dict: A dictionary containing details of the failed login attempt, or None if no failed login is detected.
+
+    Example:
+    >>> log_entry = {
+        'timestamp': '2023-04-01 12:34:56',
+        'message': 'User login failed',
+        'user': 'johndoe'
+    }
+    >>> android_failed_login(log_entry)
+    {'timestamp': '2023-04-01 12:34:56', 'user': 'johndoe', 'status': 'Failed', 'source': 'Android', 'message': 'User login failed'}
+    """
     if log_entry.get('status') in [401, 403]:
         return {
             'timestamp': log_entry['timestamp'],

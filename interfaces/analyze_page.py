@@ -1,13 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
-import argparse
-from tkinter import messagebox
 import app.log_filter as lf
 import app.log_parser as lp
 import app.log_reader as lr
 import app.log_manager as lm
 import app.log_analyzer as la
-from app.log_reader import LogReaderError
 
 class AnalyzePage(ttk.Frame):
     def __init__(self, master):
@@ -19,8 +16,10 @@ class AnalyzePage(ttk.Frame):
         self.create_widgets()
 
     def set_log_file(self, log_file_path, severity, process):
-        # Cette fonction est appelée pour définir le chemin du fichier log et déclencher l'analyse.
+        """
+        Cette fonction est appelée pour définir le chemin du fichier log et déclencher l'analyse.
         # Elle prend en paramètre le chemin du fichier log, le niveau de sévérité et le process.
+        """
         self.log_file_path = log_file_path
         self.analyze_logs(severity, process)
 
@@ -30,8 +29,6 @@ class AnalyzePage(ttk.Frame):
         log_file_path = self.log_file_path if self.log_file_path != "" else '/var/log/syslog'
 
         log_parser = lp.LogParser(log_line_pattern)
-        log_analyzer = la.LogAnalyzer()
-        log_manager = lm.LogManager()
 
         log_reader = lr.LogReader()
         log_filter = lf.LogFilter()
@@ -51,7 +48,9 @@ class AnalyzePage(ttk.Frame):
         self.log_display.insert(tk.END, log_text)
 
     def format_log_entry(self, log):
-        # Formater une entrée de log pour l'affichage
+        """
+        Formater une entrée de log pour l'affichage
+        """
         return f"Timestamp: {log['timestamp']}\n" \
                f"Device: {log['device']}\n" \
                f"Process: {log['process']}\n" \
