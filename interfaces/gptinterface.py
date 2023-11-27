@@ -57,7 +57,7 @@ class GPTPage(ttk.Frame):
 
     
 
-        response = get_gpt_response(json.dumps(parsed_logs))
+        response = get_gpt_response(json.dumps(parsed_logs[:1000]))
         # Display the selected log file path in the chat display
         self.display_chat_output(response)
         
