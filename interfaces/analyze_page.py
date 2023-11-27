@@ -25,23 +25,9 @@ class AnalyzePage(ttk.Frame):
         self.analyze_logs(severity, process)
 
     def analyze_logs(self, severity, process):
-        # Cette fonction analyse les logs en fonction du chemin du fichier, du niveau de sévérité
-        # et du nom du processus. Elle utilise les modules de l'application pour le traitement des logs.
         log_line_pattern = r'(\w+ +\d+ \d+:\d+:\d+) (\S+) (\S+): (.+)'
-        parser = argparse.ArgumentParser(description='Parse and filter logs.')
 
-        if self.log_file_path != "":
-            parser.add_argument('--log_file', default=self.log_file_path, help='Chemin vers le fichier log')
-        else:
-            parser.add_argument('--log_file', default='/var/log/syslog', help='Chemin vers le fichier log par défaut')
-
-        parser.add_argument('--severity', nargs='+', default=[], help='Spécifier les niveaux de sévérité à afficher')
-        parser.add_argument('--process', default='', help='Spécifier le nom du processus pour filtrer les logs')
-
-        args = parser.parse_args()
-        log_file_path = args.log_file
-        severity_levels = args.severity
-        process_name = args.process
+        log_file_path = self.log_file_path if self.log_file_path != "" else '/var/log/syslog'
 
         log_parser = lp.LogParser(log_line_pattern)
         log_analyzer = la.LogAnalyzer()
@@ -50,24 +36,19 @@ class AnalyzePage(ttk.Frame):
         log_reader = lr.LogReader()
         log_filter = lf.LogFilter()
 
-        # Initialiser parsed_logs avec une liste vide
-        parsed_logs = []
-
         parsed_logs = log_reader.read_log_file(log_file_path, log_parser)
         log_text = ""
 
-        # TODO fixer ça
-        # Problème dans ce if :  severity et proces_name c'est les variables que je récupére depuis le form
-        # Voir comment rentrer dans le IF et comment fonctionne le tri
-
-
-        # Filtrer les logs en fonction de la sévérité et du processus (si fournis)
-        if severity != "" or process_name != "":
-            filtered_logs = log_filter.filter_logs(parsed_logs, severity, process)
+        # Check if severity or process is provided and filter logs accordingly
+        if severity or process:
+            filtered_logs = log_filter.filter_logs(parsed_logs, [severity] if severity else [], process)
             log_text = "\n".join(self.format_log_entry(log) for log in filtered_logs)
         else:
             log_text = "\n".join(self.format_log_entry(log) for log in parsed_logs)
-            self.log_display.insert(tk.END, log_text)
+
+        # Display the logs
+        self.log_display.delete(1.0, tk.END)  # Clear existing text
+        self.log_display.insert(tk.END, log_text)
 
     def format_log_entry(self, log):
         # Formater une entrée de log pour l'affichage

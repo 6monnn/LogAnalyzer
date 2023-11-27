@@ -1,0 +1,21 @@
+Nov 16 21:00:22 project systemd-modules-load[263]: Inserted module 'lp' [INFO]
+Nov 16 21:00:22 project systemd-modules-load[263]: Inserted module 'ppdev' [INFO]
+Nov 16 21:00:22 project systemd-modules-load[263]: Inserted module 'parport_pc' [INFO]
+Nov 16 21:00:22 project systemd-sysusers[275]: Creating group systemd-coredump with gid 997. [INFO]
+Nov 16 21:00:22 project systemd-sysusers[275]: Creating user systemd-coredump (systemd Core Dumper) with uid 997 and gid 997. [INFO]
+Nov 16 21:00:22 project systemd-modules-load[263]: Inserted module 'msr' [INFO]
+Nov 16 21:00:22 project systemd[1]: Starting Flush Journal to Persistent Storage... [INFO]
+Nov 16 21:00:22 project systemd[1]: Finished Set the console keyboard layout. [INFO]
+Nov 16 21:00:22 project systemd-modules-load[263]: Inserted module 'ipmi_devintf' [INFO]
+Nov 16 21:00:22 project systemd[1]: Finished Load Kernel Modules. [INFO]
+Nov 16 21:00:22 project systemd[1]: Mounting FUSE Control File System... [INFO]
+Nov 16 21:00:22 project discord: Mounting Kernel Configuration File System... [ERROR] Kernel Configuration File System failed to mount.
+Nov 16 21:00:22 project systemd[1]: Failed to start systemd-modules-load.service [CRITICAL] The systemd-modules-load service failed to start.
+Nov 16 21:00:22 project systemd[1]: Dependency failed for Mount Root and Kernel File Systems [CRITICAL] The mount of root and kernel file systems failed.
+Nov 16 21:00:22 project systemd[1]: Reached target Basic System [INFO]
+Nov 16 21:00:22 project systemd[1]: Starting Permit User Sessions... [INFO]
+Nov 16 21:00:22 project systemd[1]: Starting System Logging Service... [INFO]
+Nov 16 21:00:22 project systemd[1]: Started CUPS Scheduler. [INFO]
+Nov 16 21:00:22 project systemd[1]: Starting User Login Management... [INFO]
+Nov 16 21:00:22 project discord: Debugging information: Variable X = 42, Y = 78 [DEBUG]
+Nov 16 21:00:22 project discord: [CRITICAL] An unrecoverable error occurred. The application is unusable and must be terminated immediately.
