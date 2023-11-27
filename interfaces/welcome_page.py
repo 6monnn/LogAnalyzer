@@ -95,3 +95,20 @@ class WelcomePage(tk.Frame):
         # Bouton pour démarrer l'analyse
         self.start_button = ttk.Button(self, text="Start Analysis", command=self.start_analysis)
         self.start_button.pack(fill="both", pady=20)
+
+        # Menu déroulant pour les types de logs
+        log_type_label = ttk.Label(entry_frame, text="Type de Log:")
+        log_type_label.grid(row=3, column=0, padx=10, pady=10, sticky="e")
+
+        self.log_type = tk.StringVar()
+        log_type_options = ["Android", "Apache", "Linux", "Mac", "OpenSSH", "OpenStack", "Thunderbird", "Windows"]
+        self.log_type_combobox = ttk.Combobox(entry_frame, textvariable=self.log_type, values=log_type_options, state="readonly")
+        self.log_type_combobox.grid(row=3, column=1, padx=10, pady=10, sticky="w")
+        self.log_type_combobox.current(2)
+
+        self.anomaly_detection_var = tk.BooleanVar()
+        self.anomaly_detection_checkbox = tk.Checkbutton(entry_frame, text="Détection d'anomalies", variable=self.anomaly_detection_var)
+        self.anomaly_detection_checkbox.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky="w")
+
+        self.start_button.pack_forget()
+        self.start_button.pack(fill="both", pady=20)

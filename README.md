@@ -21,12 +21,6 @@ Bienvenue dans notre analyseur de Logs, une application simple pour lire et filt
     cd LogAnalyzer
     ```
 
-3. Installez les dépendances :
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
 ## Utilisation
 
 1. Exécutez le fichier principal de l'application :
@@ -35,7 +29,7 @@ Bienvenue dans notre analyseur de Logs, une application simple pour lire et filt
     python3 main.py
     ```
 
-2. L'application s'ouvrira avec une page de bienvenue. Choisissez votre fichier de logs et appuyez sur "Start Analysis" pour voir les résultats.
+2. L'application s'ouvrira avec une page de bienvenue. Choisissez votre fichier de logs, selectionnez son type et appuyez sur "Start Analysis" pour voir les résultats.
 
 ## Fonctionnalités
 
