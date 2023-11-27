@@ -42,6 +42,20 @@ class WelcomePage(tk.Frame):
         # Appeler la fonction show_analyze_page du maître avec les paramètres nécessaires
         self.master.show_analyze_page(log_file_path, process_filter, severity_filter)
 
+    def analyze_with_gpt(self):
+        # Fonction pour gérer le bouton "Analyze with GPT"
+        log_file_path = self.file_path.get()
+        severity_filter = self.severity_filter.get()
+        process_filter = self.process_filter.get()
+
+        # Ajouter une vérification pour s'assurer que le fichier existe
+        if not os.path.exists(log_file_path):
+            messagebox.showerror("Error", f"Fichier introuvable: {log_file_path}")
+            return
+
+        # Appeler la fonction show_chat_page du maître avec les paramètres nécessaires
+        self.master.show_gpt_page(log_file_path, process_filter, severity_filter)
+
     def create_widgets(self):
         # Configurer les poids des colonnes et des lignes pour rendre la grille réactive
         self.columnconfigure(0, weight=1)
@@ -56,7 +70,7 @@ class WelcomePage(tk.Frame):
         title_frame.pack(fill="both", expand=True)
 
         # Label du titre
-        self.title_label = ttk.Label(title_frame, text="Bienvenue dans notre analyseur de logs")
+        self.title_label = ttk.Label(title_frame, text="Welcome to our log analyzer")
         self.title_label.pack(pady=10)
 
         # Cadre pour les champs d'entrée
@@ -94,7 +108,12 @@ class WelcomePage(tk.Frame):
 
         # Bouton pour démarrer l'analyse
         self.start_button = ttk.Button(self, text="Start Analysis", command=self.start_analysis)
-        self.start_button.pack(fill="both", pady=20)
+        self.start_button.pack(fill="both", pady=10)
+
+        # Bouton pour l'analyse avec GPT
+        self.gpt_button = ttk.Button(self, text="Analyze with GPT", command=self.analyze_with_gpt)
+        self.gpt_button.pack(fill="both", pady=10)
+      
 
         # Menu déroulant pour les types de logs
         log_type_label = ttk.Label(entry_frame, text="Type de Log:")
@@ -106,9 +125,7 @@ class WelcomePage(tk.Frame):
         self.log_type_combobox.grid(row=3, column=1, padx=10, pady=10, sticky="w")
         self.log_type_combobox.current(2)
 
-        self.anomaly_detection_var = tk.BooleanVar()
+    """ self.anomaly_detection_var = tk.BooleanVar()
         self.anomaly_detection_checkbox = tk.Checkbutton(entry_frame, text="Détection d'anomalies", variable=self.anomaly_detection_var)
         self.anomaly_detection_checkbox.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky="w")
-
-        self.start_button.pack_forget()
-        self.start_button.pack(fill="both", pady=20)
+"""
